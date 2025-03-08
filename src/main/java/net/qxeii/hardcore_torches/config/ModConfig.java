@@ -31,6 +31,8 @@ public class ModConfig implements ConfigData {
 
 	// Item Interaction
 
+	@Comment("If true, you can light torches as long as there is a lighter item in your inventory without having to actively hold it. Condition will still be used. Default: true")
+	public boolean lightTorchesWithLighterInInventory = true;
 
 	@Comment("Allow the player to pick up lanterns with sneak-clicking. Default: true")
 	public boolean pickUpLanterns = true;
