@@ -1,0 +1,24 @@
+{
+	"replace": false,
+	"values": [
+		{"id": "minecraft:stone_shovel"},
+		{"id": "minecraft:iron_shovel"},
+		{"id": "minecraft:golden_shovel"},
+		{"id": "minecraft:diamond_shovel"},
+		{"id": "minecraft:netherite_shovel"},
+		{"id": "create_ironworks:steel_shovel", "required": false},
+		{"id": "create_ironworks:brass_shovel", "required": false},
+		{"id": "create_ironworks:copper_shovel", "required": false},
+		{"id": "create_ironworks:bronze_shovel", "required": false},
+		{"id": "create_ironworks:netherite_steel_shovel", "required": false},
+		{"id": "create_ironworks:iron_paxel", "required": false},
+		{"id": "create_ironworks:copper_paxel", "required": false},
+		{"id": "create_ironworks:gold_paxel", "required": false},
+		{"id": "create_ironworks:diamond_paxel", "required": false},
+		{"id": "create_ironworks:steel_paxel", "required": false},
+		{"id": "create_ironworks:brass_paxel", "required": false},
+		{"id": "create_ironworks:bronze_paxel", "required": false},
+		{"id": "create_ironworks:netherite_steel_paxel", "required": false},
+		{"id": "create_ironworks:netherite_diamond_paxel", "required": false}
+	]
+}
