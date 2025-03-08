@@ -59,8 +59,7 @@ public class CandleBlock extends AbstractCandleBlock implements LightableBlock, 
 
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
 			BlockHitResult hit) {
-		if (player.getAbilities().allowModifyWorld && player.getStackInHand(hand).isEmpty()
-				&& (Boolean) state.get(LIT)) {
+		if (player.getAbilities().allowModifyWorld && (Boolean) state.get(LIT)) {
 			extinguish(player, state, world, pos);
 			return ActionResult.success(world.isClient);
 		} else {

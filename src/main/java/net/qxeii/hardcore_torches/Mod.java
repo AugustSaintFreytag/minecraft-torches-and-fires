@@ -82,6 +82,8 @@ public class Mod implements ModInitializer {
 			new Identifier("minecraft", "logs_that_burn"));
 	public static final TagKey<Item> CAMPFIRE_SHOVELS = TagKey.of(RegistryKeys.ITEM,
 			new Identifier("minecraft", "shovels"));
+	public static final TagKey<Item> FIRE_EXTINGUISHERS = TagKey.of(RegistryKeys.ITEM,
+			new Identifier("hardcore_torches", "fire_extinguishers"));
 
 	public static final LootFunctionType HARDCORE_TORCH_LOOT_FUNCTION = new LootFunctionType(
 			new TorchLootFunction.Serializer());
@@ -424,7 +426,7 @@ public class Mod implements ModInitializer {
 
 		UNLIT_LANTERN_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,
 				new Identifier("hardcore_torches", "unlit_lantern"), new UnlitLanternRecipe.Serializer());
-		
+
 		CANDLE_RECIPE_SERIALIZER = Registry.register(Registries.RECIPE_SERIALIZER,
 				new Identifier("hardcore_torches", "candle"), new CandleRecipe.Serializer());
 
