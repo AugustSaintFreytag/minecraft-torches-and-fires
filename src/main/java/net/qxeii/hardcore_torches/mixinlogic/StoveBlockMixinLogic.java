@@ -40,7 +40,7 @@ public interface StoveBlockMixinLogic {
 
 		// Fuel Check
 
-		if (player.isSneaking() && heldStack.isEmpty()) {
+		if (player.isSneaking()) {
 			if (world.isClient) {
 				displayFuelMessage(player, stoveFuel);
 			}

@@ -160,7 +160,7 @@ public abstract class AbstractTorchBlock extends BlockWithEntity implements Ligh
 
 		// Fuel Check
 
-		if (stack.isEmpty() && player.isSneaking()) {
+		if (player.isSneaking()) {
 			if (!world.isClient) {
 				var blockEntity = (FuelBlockEntity) world.getBlockEntity(position);
 				displayFuelMessage(world, player, blockEntity);
@@ -171,7 +171,7 @@ public abstract class AbstractTorchBlock extends BlockWithEntity implements Ligh
 
 		// Extinguishing
 
-		if (stack.isEmpty() && burnState == ETorchState.LIT) {
+		if (burnState == ETorchState.LIT) {
 			extinguishWithInteraction(world, position, state, player, stack, hand);
 			return ActionResult.SUCCESS;
 		}

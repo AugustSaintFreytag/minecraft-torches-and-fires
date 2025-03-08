@@ -64,7 +64,7 @@ public interface CampfireBlockMixinLogic {
 
 		var heldStack = player.getStackInHand(hand);
 
-		if (heldStack.isEmpty() && player.isSneaking()) {
+		if (player.isSneaking()) {
 			if (world.isClient) {
 				displayFuelMessage(player, campfireBlockEntity.getFuel());
 			}

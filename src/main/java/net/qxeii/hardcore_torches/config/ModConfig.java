@@ -31,11 +31,6 @@ public class ModConfig implements ConfigData {
 
 	// Item Interaction
 
-	@Comment("If true, you can right click torches to extinguish them while not holding fuel or a torch to light. Default: true")
-	public boolean handUnlightTorch = true;
-
-	@Comment("If true, you can right click lanterns to extinguish them while not holding fuel or a torch to light. Default: true")
-	public boolean handUnlightLantern = true;
 
 	@Comment("Allow the player to pick up lanterns with sneak-clicking. Default: true")
 	public boolean pickUpLanterns = true;

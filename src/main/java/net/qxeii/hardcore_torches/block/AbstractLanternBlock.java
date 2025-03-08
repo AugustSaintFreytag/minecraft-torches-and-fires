@@ -164,13 +164,13 @@ public abstract class AbstractLanternBlock extends BlockWithEntity implements Li
 		}
 
 		// Igniting
-		if (stack.isEmpty() && !this.isLit) {
+		if (!this.isLit) {
 			useFuelAndLightWithInteraction(state, world, position, player, hand);
 			return ActionResult.SUCCESS;
 		}
 
 		// Extinguishing
-		if (stack.isEmpty() && this.isLit) {
+		if (this.isLit) {
 			extinguishWithInteraction(world, position, state, player, hand);
 			return ActionResult.SUCCESS;
 		}
