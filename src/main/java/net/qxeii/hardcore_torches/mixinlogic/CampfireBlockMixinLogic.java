@@ -43,10 +43,6 @@ public interface CampfireBlockMixinLogic {
 
 	public StateManager<Block, BlockState> getStateManager();
 
-	public void setDefaultState(BlockState defaultState);
-
-	public BlockState getDefaultState();
-
 	// Placement
 
 	public default BlockState injectedGetPlacementState(ItemPlacementContext context, BlockState state) {
@@ -72,7 +68,7 @@ public interface CampfireBlockMixinLogic {
 			return ActionResult.PASS;
 		}
 
-		if (heldStack.isIn(Mod.CAMPFIRE_SHOVELS)) {
+		if (heldStack.isIn(Mod.FIRE_EXTINGUISHERS)) {
 			if (!isLit) {
 				return ActionResult.PASS;
 			}
@@ -125,14 +121,19 @@ public interface CampfireBlockMixinLogic {
 			return;
 		}
 
-		var ruinedShovelItemId = shovelItemMap().get(stack.getItem().getTranslationKey());
-		var ruinedShovelItem = Registries.ITEM.get(ruinedShovelItemId);
+		var ruinedItemId = ruinedEquipmentItemMap().get(stack.getItem().getTranslationKey());
 
-		if (ruinedShovelItem == Items.AIR) {
+		if (ruinedItemId == null) {
+			ruinedItemId = ruinedEquipmentFallbackItem();
+		}
+
+		var ruinedItem = Registries.ITEM.get(ruinedItemId);
+
+		if (ruinedItem == Items.AIR) {
 			return;
 		}
 
-		var ruinedShovelStack = new ItemStack(ruinedShovelItem, 1);
+		var ruinedShovelStack = new ItemStack(ruinedItem, 1);
 		player.getInventory().setStack(itemSlot, ruinedShovelStack);
 	}
 
@@ -141,7 +142,7 @@ public interface CampfireBlockMixinLogic {
 		player.sendMessage(fuelTimeMessage, true);
 	}
 
-	private Map<String, Identifier> shovelItemMap() {
+	private Map<String, Identifier> ruinedEquipmentItemMap() {
 		return new HashMap<String, Identifier>(
 				Map.of(
 						"minecraft:wooden_shovel", new Identifier("ruined_equipment", "ruined_wooden_shovel"),
@@ -149,6 +150,10 @@ public interface CampfireBlockMixinLogic {
 						"minecraft:iron_shovel", new Identifier("ruined_equipment", "ruined_iron_shovel"),
 						"minecraft:golden_shovel", new Identifier("ruined_equipment", "ruined_golden_shovel"),
 						"minecraft:diamond_shovel", new Identifier("ruined_equipment", "ruined_diamond_shovel")));
+	}
+
+	private Identifier ruinedEquipmentFallbackItem() {
+		return new Identifier("ruined_equipment", "ruined_items_ashes");
 	}
 
 }
