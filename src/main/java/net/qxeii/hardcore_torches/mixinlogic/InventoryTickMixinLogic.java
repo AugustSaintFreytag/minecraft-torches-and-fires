@@ -100,6 +100,11 @@ public interface InventoryTickMixinLogic {
 		var state = item.getTorchState();
 
 		if (state == ETorchState.LIT) {
+			// Optimization bail, prevent torch item being swapped on every tick.
+			if (!shouldPerformFuelTick(world)) {
+				return;
+			}
+
 			var fuelUse = getFuelUseForStack(world, inventory, stack);
 			var modifiedStack = TorchItem.modifiedStackWithAddedFuel(world, stack, -fuelUse);
 
@@ -140,6 +145,11 @@ public interface InventoryTickMixinLogic {
 			return;
 		}
 
+		// Optimization bail, prevent lantern item being swapped on every tick.
+		if (!shouldPerformFuelTick(world)) {
+			return;
+		}
+
 		var fuelUse = getFuelUseForStack(world, inventory, stack);
 		var modifiedStack = LanternItem.modifiedStackWithAddedFuel(world, stack, -fuelUse);
 
@@ -172,6 +182,10 @@ public interface InventoryTickMixinLogic {
 
 	private void tickGlowstoneItem(ServerWorld world, PlayerEntity player, PlayerInventory inventory, ItemStack stack,
 			int slot) {
+		if (!shouldPerformFuelTick(world)) {
+			return;
+		}
+
 		if (WorldUtils.worldIsNether(world)) {
 			ItemStack modifiedStack = GlowstoneItem.modifiedStackWithAddedFuel(stack, world, 15);
 			inventory.setStack(slot, modifiedStack);
@@ -244,6 +258,10 @@ public interface InventoryTickMixinLogic {
 	}
 
 	// Utility
+
+	private boolean shouldPerformFuelTick(ServerWorld world) {
+		return world.getTime() % Mod.config.itemFuelTickFactor == 0;
+	}
 
 	private boolean worldIsRaining(ServerWorld world, BlockPos position) {
 		return world.hasRain(position);
