@@ -317,6 +317,13 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext context) {
+		var world = context.getWorld();
+		var hand = context.getHand();
+
+		if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND && didRecentlyUsePreventingItem(world)) {
+			return super.useOnBlock(context);
+		}
+
 		// Light torch in hand on existing torch.
 		return super.useOnBlock(context);
 	}
