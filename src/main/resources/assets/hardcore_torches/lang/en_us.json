@@ -60,6 +60,7 @@
 	"text.autoconfig.hardcore_torches.option.campfireExtinguishFuelLoss": "Campfire extinguish fuel loss",
 	"text.autoconfig.hardcore_torches.option.torchesExtinguishFuelLoss": "Torches extinguish fuel loss",
 	"text.autoconfig.hardcore_torches.option.lanternLightFuelLoss": "Lantern light fuel loss",
+	"text.autoconfig.hardcore_torches.option.itemFuelTickFactor": "Item fuel tick factor",
 	"text.autoconfig.hardcore_torches.option.itemFuelUseMultiplierWhenHeld": "Item fuel use multiplier when held",
 	"text.autoconfig.hardcore_torches.option.itemFuelUseJitterChanceWhenHeld": "Item fuel use jitter when held",
 	"text.autoconfig.hardcore_torches.option.campfireFuelAdditionMultiplier": "Campfire fuel addition multiplier",

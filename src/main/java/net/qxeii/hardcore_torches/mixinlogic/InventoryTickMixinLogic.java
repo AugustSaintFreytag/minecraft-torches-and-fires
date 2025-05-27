@@ -17,7 +17,8 @@ import net.qxeii.hardcore_torches.util.WorldUtils;
 
 public interface InventoryTickMixinLogic {
 
-	public default void tickItem(ServerWorld world, PlayerEntity player, PlayerInventory inventory, int slot) {
+	public default void tickItemForConversion(ServerWorld world, PlayerEntity player, PlayerInventory inventory,
+			int slot) {
 		if (!Mod.config.tickInInventory || player.isCreative() || player.isSpectator()) {
 			return;
 		}
@@ -36,6 +37,20 @@ public interface InventoryTickMixinLogic {
 
 		if (Mod.config.convertVanillaLanterns && item == Items.LANTERN) {
 			convertVanillaLantern(inventory, stack, slot);
+			return;
+		}
+	}
+
+	public default void tickItemForFuelUse(ServerWorld world, PlayerEntity player, PlayerInventory inventory,
+			int slot) {
+		if (!Mod.config.tickInInventory || player.isCreative() || player.isSpectator()) {
+			return;
+		}
+
+		var stack = inventory.getStack(slot);
+		var item = stack.getItem();
+
+		if (stack.isEmpty()) {
 			return;
 		}
 
@@ -261,7 +276,7 @@ public interface InventoryTickMixinLogic {
 			}
 		}
 
-		return fuelUse;
+		return fuelUse * Mod.config.itemFuelTickFactor;
 	}
 
 }

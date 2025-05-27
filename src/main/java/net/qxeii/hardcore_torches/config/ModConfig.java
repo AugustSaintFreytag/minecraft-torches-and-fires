@@ -95,6 +95,9 @@ public class ModConfig implements ConfigData {
 
 	// Item Fuel Use
 
+	@Comment("Items use reduced ticking in inventory and world, only ticking once for every n game ticks. Both an optimization and reduces chance for server/client race conditions. Default: 60")
+	public int itemFuelTickFactor = 60;
+
 	@Comment("Items use up more fuel when held by a player (e.g. 2 means items burn half as long). Default: 2")
 	public int itemFuelUseMultiplierWhenHeld = 2;
 

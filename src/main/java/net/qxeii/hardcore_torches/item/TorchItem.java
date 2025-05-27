@@ -83,6 +83,25 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		return clamp(nbt.getInt("Fuel"), 0, Mod.config.defaultTorchFuel);
 	}
 
+	public static void setFuel(ItemStack stack, int fuel) {
+		NbtCompound nbt = stack.getNbt();
+
+		if (nbt == null) {
+			nbt = new NbtCompound();
+		}
+
+		fuel = clamp(fuel, 0, Mod.config.defaultTorchFuel);
+		nbt.putInt("Fuel", fuel);
+
+		if (fuel < Mod.config.defaultTorchFuel && fuel > 0) {
+			nbt.putInt("Salt", Random.create().nextInt());
+		} else {
+			nbt.remove("Salt");
+		}
+
+		stack.setNbt(nbt);
+	}
+
 	public static boolean isUsed(ItemStack stack) {
 		int fuel = getFuel(stack);
 
@@ -304,8 +323,7 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 
 	@Override
 	public boolean onClicked(ItemStack lhsStack, ItemStack rhsStack, Slot slot, ClickType clickType,
-			PlayerEntity player,
-			StackReference cursorStackReference) {
+			PlayerEntity player, StackReference cursorStackReference) {
 		if (!slot.canTakePartial(player) || rhsStack.isEmpty() || !(rhsStack.getItem() instanceof TorchItem)) {
 			return super.onClicked(lhsStack, rhsStack, slot, clickType, player, cursorStackReference);
 		}
@@ -339,16 +357,24 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 			return ItemStack.EMPTY;
 		}
 
-		var nbt = stack.getNbt();
-		var item = torchItemForState(newState);
-		var outputStack = new ItemStack(item, stack.getCount());
+		var currentItem = (TorchItem) stack.getItem();
+		var currentState = currentItem.getTorchState();
 
-		if (nbt != null) {
-			outputStack.setNbt(nbt.copy());
+		var newItem = torchItemForState(newState);
+		var outputStack = new ItemStack(newItem, stack.getCount());
+
+		var nbt = stack.getNbt();
+
+		if (nbt == null) {
+			nbt = new NbtCompound();
 		}
+
+		outputStack.setNbt(nbt.copy());
 
 		if (newState == ETorchState.BURNT) {
 			outputStack.setNbt(null);
+		} else if (currentState == ETorchState.UNLIT) {
+			setFuel(outputStack, getFuel(stack));
 		}
 
 		return outputStack;
@@ -375,23 +401,16 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 			return stack;
 		}
 
-		var fuel = getFuel(stack);
 		var nbt = stack.getNbt();
 
 		if (nbt == null) {
 			nbt = new NbtCompound();
 		}
 
+		var fuel = getFuel(stack);
 		fuel = clamp(fuel + amount, 0, Mod.config.defaultTorchFuel);
-		nbt.putInt("Fuel", fuel);
 
-		if (fuel < Mod.config.defaultTorchFuel && fuel > 0) {
-			nbt.putInt("Salt", Random.create().nextInt());
-		} else {
-			nbt.remove("Salt");
-		}
-
-		stack.setNbt(nbt);
+		setFuel(stack, amount);
 		return stack;
 	}
 
