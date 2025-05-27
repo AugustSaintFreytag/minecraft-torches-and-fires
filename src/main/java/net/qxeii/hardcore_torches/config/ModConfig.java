@@ -101,9 +101,6 @@ public class ModConfig implements ConfigData {
 	@Comment("Items use up more fuel when held by a player (e.g. 2 means items burn half as long). Default: 2")
 	public int itemFuelUseMultiplierWhenHeld = 2;
 
-	@Comment("Items randomly use more or less fuel when held by a player per tick (e.g. 10–100 is minor jitter, 1000 is significant jitter). Default: 0")
-	public int itemFuelUseJitterChanceWhenHeld = 0;
-
 	@Comment("Items added to a campfire have their fuel value multiplied (e.g. 4 means one coal adds the fuel value of 4x coal to the fire). Default: 4")
 	public int campfireFuelAdditionMultiplier = 4;
 
