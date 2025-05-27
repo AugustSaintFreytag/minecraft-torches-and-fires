@@ -323,8 +323,7 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 
 	@Override
 	public boolean onClicked(ItemStack lhsStack, ItemStack rhsStack, Slot slot, ClickType clickType,
-			PlayerEntity player,
-			StackReference cursorStackReference) {
+			PlayerEntity player, StackReference cursorStackReference) {
 		if (!slot.canTakePartial(player) || rhsStack.isEmpty() || !(rhsStack.getItem() instanceof TorchItem)) {
 			return super.onClicked(lhsStack, rhsStack, slot, clickType, player, cursorStackReference);
 		}
@@ -370,14 +369,12 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 			nbt = new NbtCompound();
 		}
 
-		if (!nbt.contains("Fuel")) {
-			nbt.putInt("Fuel", Mod.config.defaultTorchFuel);
-		}
-
 		outputStack.setNbt(nbt.copy());
 
 		if (newState == ETorchState.BURNT) {
 			outputStack.setNbt(null);
+		} else if (currentState == ETorchState.UNLIT) {
+			setFuel(outputStack, getFuel(stack));
 		}
 
 		return outputStack;
