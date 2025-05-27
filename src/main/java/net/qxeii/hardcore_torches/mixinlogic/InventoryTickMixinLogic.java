@@ -113,6 +113,7 @@ public interface InventoryTickMixinLogic {
 				return;
 			}
 
+			inventory.setStack(slot, modifiedStack);
 			return;
 		}
 
@@ -127,6 +128,7 @@ public interface InventoryTickMixinLogic {
 					return;
 				}
 
+				inventory.setStack(slot, modifiedStack);
 				return;
 			}
 
@@ -275,23 +277,7 @@ public interface InventoryTickMixinLogic {
 		int fuelUse = 1;
 
 		if (stackIsInHand(inventory, stack)) {
-			fuelUse = fuelUse * Mod.config.itemFuelUseMultiplierWhenHeld;
-
-			// For: Mod.config.itemFuelUseJitterChanceWhenHeld
-			// Take half of jitter chance as probability for jitter to be applied per tick.
-			// The higher the jitter value, the higher the chance, zero means no chance.
-
-			if (Mod.config.itemFuelUseJitterChanceWhenHeld > 0) {
-				float jitterRawValue = (float) Mod.config.itemFuelUseJitterChanceWhenHeld;
-				int jitterRandomRange = (int) Math.max(0, (1 / (jitterRawValue + 1)) * 1000 - 1);
-
-				if (jitterRandomRange == 0 || world.random.nextBetweenExclusive(0, jitterRandomRange) == 0) {
-					int jitterFuelMax = (int) Math.max(1, jitterRawValue / 50);
-					int jitterFuelUse = world.random.nextBetweenExclusive(0, jitterFuelMax + 1);
-
-					fuelUse = fuelUse + jitterFuelUse;
-				}
-			}
+			fuelUse *= Mod.config.itemFuelUseMultiplierWhenHeld;
 		}
 
 		return fuelUse * Mod.config.itemFuelTickFactor;

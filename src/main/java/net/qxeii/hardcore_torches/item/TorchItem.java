@@ -320,7 +320,8 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		var world = context.getWorld();
 		var hand = context.getHand();
 
-		if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND && didRecentlyUsePreventingItem(world)) {
+		if (Mod.config.preventUnwantedOffHandInteraction && hand == Hand.OFF_HAND
+				&& didRecentlyUsePreventingItem(world)) {
 			return super.useOnBlock(context);
 		}
 
@@ -415,9 +416,9 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		}
 
 		var fuel = getFuel(stack);
-		fuel = clamp(fuel + amount, 0, Mod.config.defaultTorchFuel);
+		fuel += amount;
 
-		setFuel(stack, amount);
+		setFuel(stack, fuel);
 		return stack;
 	}
 
