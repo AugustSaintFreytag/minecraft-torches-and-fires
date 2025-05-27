@@ -113,6 +113,7 @@ public interface InventoryTickMixinLogic {
 				return;
 			}
 
+			inventory.setStack(slot, modifiedStack);
 			return;
 		}
 
@@ -127,6 +128,7 @@ public interface InventoryTickMixinLogic {
 					return;
 				}
 
+				inventory.setStack(slot, modifiedStack);
 				return;
 			}
 
