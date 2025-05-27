@@ -358,13 +358,23 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 			return ItemStack.EMPTY;
 		}
 
-		var nbt = stack.getNbt();
-		var item = torchItemForState(newState);
-		var outputStack = new ItemStack(item, stack.getCount());
+		var currentItem = (TorchItem) stack.getItem();
+		var currentState = currentItem.getTorchState();
 
-		if (nbt != null) {
-			outputStack.setNbt(nbt.copy());
+		var newItem = torchItemForState(newState);
+		var outputStack = new ItemStack(newItem, stack.getCount());
+
+		var nbt = stack.getNbt();
+
+		if (nbt == null) {
+			nbt = new NbtCompound();
 		}
+
+		if (!nbt.contains("Fuel")) {
+			nbt.putInt("Fuel", Mod.config.defaultTorchFuel);
+		}
+
+		outputStack.setNbt(nbt.copy());
 
 		if (newState == ETorchState.BURNT) {
 			outputStack.setNbt(null);
