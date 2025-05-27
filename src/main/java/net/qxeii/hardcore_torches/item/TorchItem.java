@@ -416,6 +416,7 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 		}
 
 		var fuel = getFuel(stack);
+		fuel += amount;
 
 		setFuel(stack, fuel);
 		return stack;
