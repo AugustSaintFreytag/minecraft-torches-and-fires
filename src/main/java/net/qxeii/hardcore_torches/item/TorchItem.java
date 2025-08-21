@@ -30,16 +30,19 @@ import net.qxeii.hardcore_torches.util.WorldUtils;
 
 public class TorchItem extends VerticallyAttachableBlockItem implements LightableItem {
 
-	// Properties
-
-	ETorchState torchState;
-	TorchGroup torchGroup;
-
-	int maxFuel;
-
-	long lastPreventingInteractionTick = 0;
+	// Configuration
 
 	private static final long INTERACTION_PREVENTION_COOLDOWN_TICKS = 50;
+
+	// Properties
+
+	public ETorchState torchState;
+
+	public TorchGroup torchGroup;
+
+	public int maxFuel;
+
+	public long lastPreventingInteractionTick = 0;
 
 	// Init
 
@@ -119,10 +122,10 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 
 	@Override
 	public int getItemBarStep(ItemStack stack) {
-		int fuel = getFuel(stack);
+		var fuel = getFuel(stack);
 
-		if (maxFuel != 0) {
-			return Math.round(13.0f - (maxFuel - fuel) * 13.0f / maxFuel);
+		if (this.maxFuel != 0) {
+			return Math.round(13.0f - (this.maxFuel - fuel) * 13.0f / this.maxFuel);
 		}
 
 		return 0;
@@ -130,7 +133,13 @@ public class TorchItem extends VerticallyAttachableBlockItem implements Lightabl
 
 	@Override
 	public int getItemBarColor(ItemStack stack) {
-		return MathHelper.hsvToRgb(3.0f, 1.0f, 1.0f);
+		// Transition from yellow to red as fuel depletes.
+		var fuel = getFuel(stack);
+		var fuelFraction = (float) fuel / (float) this.maxFuel;
+
+		// Hue transitions from 60 (yellow) to 0 (red) as fuel depletes
+		float hue = fuelFraction * 60.0f / 360.0f;
+		return MathHelper.hsvToRgb(hue, 1.0f, 1.0f);
 	}
 
 	@Override
