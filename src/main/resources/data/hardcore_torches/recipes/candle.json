@@ -1,14 +1,14 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type": "hardcore_torches:candle",
 	"pattern": [
-		"#", 
-		"|"
+		"i",
+		"h"
 	],
 	"key": {
-		"#": {
+		"i": {
 			"tag": "minecraft:string"
 		},
-		"|": {
+		"h": {
 			"item": "minecraft:honeycomb"
 		}
 	},

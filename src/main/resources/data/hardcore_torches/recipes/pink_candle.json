@@ -1,0 +1,14 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "hardcore_torches:candle"
+		},
+		{
+			"item": "minecraft:pink_dye"
+		}
+	],
+	"result": {
+		"item": "hardcore_torches:pink_candle"
+	}
+}
